@@ -1,0 +1,36 @@
+{
+  "name": "JackBot",
+  "version": "1.0.0",
+  "description": "The best Discord Bot ever made.",
+  "author": "Jack Beoris",
+  "main": "bot",
+  "types": "dist/index",
+  "scripts": {
+    "start": "node dist/bot.js",
+    "postinstall": "npm run build",
+    "build": "tsc --preserveWatchOutput --esModuleInterop --resolveJsonModule",
+    "dev": "tsc-watch -p . --onSuccess \"node dist/bot.js\"",
+    "test": "tsc --preserveWatchOutput --esModuleInterop --resolveJsonModule && mocha dist/**/*.spec.js",
+    "lint": "eslint src --ext ts",
+    "tsc": "tsc --preserveWatchOutput --esModuleInterop --resolveJsonModule"
+  },
+  "dependencies": {
+    "@types/mocha": "2.2.41",
+    "@types/node": "^8.0.45",
+    "discord.io": "^2.5.3",
+    "tsc": "1.20150623.0",
+    "typescript": "3.4.5"
+  },
+  "devDependencies": {
+    "eslint": "4.0.0",
+    "eslint-config-airbnb-base": "11.2.0",
+    "eslint-plugin-import": "2.3.0",
+    "eslint-plugin-promise": "3.5.0",
+    "mocha": "3.4.2",
+    "tsc-watch": "1.0.29"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jbeoris/JackBot"
+  }
+}

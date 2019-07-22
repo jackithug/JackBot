@@ -1,21 +1,21 @@
-import * as Discord from 'discord.io'
+import * as Discord from 'discord.js'
+import { EventManager } from './events/eventManager'
+import * as config from './config'
+import { EnvVariable } from './config'
 
-const token = process.env.DISCORD_TOKEN
+try {
+    config.verifyEnv()
+} catch (error) {
+    console.error(error.message)
+    process.exit(1)
+}
 
-const bot = new Discord.Client({
-    token: token,
-    autorun: true
-})
+const token = config.getVariable(EnvVariable.Discord)
+const client = new Discord.Client()
+const eventHandler = new EventManager(client)
 
-bot.on('ready', () => {
-    console.log("Logged in as %s - %s", bot.username, bot.id)
-})
+// Listen for events
+eventHandler.listenAll()
 
-bot.on('message', (user, userId, channelId, message, event) => {
-    if (message === "What color?") {
-        bot.sendMessage({
-            to: channelId,
-            message: Math.random().toString()
-        })
-    }
-})
+// Login
+client.login(token)

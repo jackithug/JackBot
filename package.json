@@ -17,7 +17,9 @@
   "dependencies": {
     "@types/mocha": "2.2.41",
     "@types/node": "^8.0.45",
-    "discord.io": "^2.5.3",
+    "discord.js": "^11.5.1",
+    "lodash": "^4.17.15",
+    "node-wolfram-alpha": "^1.2.5",
     "tsc": "1.20150623.0",
     "typescript": "3.4.5"
   },

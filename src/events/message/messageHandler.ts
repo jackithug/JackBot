@@ -1,6 +1,6 @@
 import * as Discord from "discord.js"
 import * as Wolfram from '../../modules/wolfram'
-import { ClientEvent } from "../ClientEvent"
+import { ClientEvent } from "../clientEvent"
 
 enum MessageType {
     Help = "help",

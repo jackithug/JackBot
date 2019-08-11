@@ -1,5 +1,5 @@
 import * as Discord from "discord.js"
-import { ClientEvent } from "../ClientEvent"
+import { ClientEvent } from "../clientEvent"
 
 export class ReadyHandler {
 

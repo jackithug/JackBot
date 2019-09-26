@@ -1,8 +1,8 @@
 import * as _ from 'lodash';
 import * as Discord from 'discord.js';
-import * as txtToMp3 from 'text-to-mp3';
+import txtToMp3 from 'text-to-mp3';
 import * as fs from 'fs';
-import * as uuidv4 from 'uuid/v4';
+import uuidv4 from 'uuid/v4';
 
 export const transmit = async (text: string, voiceChannel: Discord.VoiceChannel): Promise<any> => {
     let connection = await voiceChannel.join();

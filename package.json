@@ -18,7 +18,7 @@
     "@types/mocha": "2.2.41",
     "@types/node": "^8.0.45",
     "discord.js": "^11.5.1",
-    "ffmpeg-static": "^2.6.0",
+    "ffmpeg-binaries": "^4.0.0",
     "lodash": "^4.17.15",
     "node-opus": "^0.3.2",
     "node-wolfram-alpha": "^1.2.5",

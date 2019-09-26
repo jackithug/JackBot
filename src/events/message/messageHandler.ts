@@ -1,11 +1,14 @@
 import * as Discord from "discord.js"
 import * as Wolfram from '../../modules/wolfram'
+import * as TTS from '../../modules/tts'
+import * as _ from 'lodash'
 import { ClientEvent } from "../clientEvent"
 
 enum MessageType {
     Help = "help",
     Greeting = "greeting",
-    Evaluate = "evaluate"
+    Evaluate = "evaluate",
+    TTS = "tts"
 }
 
 export class MessageHandler {
@@ -42,6 +45,9 @@ export class MessageHandler {
             case MessageType.Greeting:
                 this.greeting(message)
                 break
+            case MessageType.TTS:
+                this.tts(message, args)
+                break
         }
     }
 
@@ -70,6 +76,22 @@ export class MessageHandler {
         let reply = replies[date.getTime() % (replies.length)]
 
         message.reply(reply)
+    }
+
+    private tts = async (message: Discord.Message, args: string[]) => {
+        try {
+            if(!message.guild) throw Error('TTS is only supported in servers. Not DMs.');
+            if(_.isEmpty(args)) throw Error('TTS text must not be empty.');
+
+            let voiceChannel: Discord.VoiceChannel = _.get(message, 'member.voiceChannel', null);
+            let ttsText: string = args.join(' ');
+
+            if(_.isNil(voiceChannel)) throw Error('Must be in a voice channel to use TTS.');
+
+            await TTS.transmit(ttsText, voiceChannel)
+        } catch(error) {
+            message.reply(error.message)
+        }
     }
 
 }

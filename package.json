@@ -22,7 +22,7 @@
     "lodash": "^4.17.15",
     "node-wolfram-alpha": "^1.2.5",
     "opusscript": "0.0.7",
-    "text-to-mp3": "^1.0.4",
+    "text-to-mp3": "git://github.com/enricoaleandri/text-to-mp3.git#ef7764a",
     "tsc": "1.20150623.0",
     "typescript": "3.4.5"
   },

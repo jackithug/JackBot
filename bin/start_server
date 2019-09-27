@@ -2,4 +2,4 @@
 
 cd /opt/app/jackbot/
 
-pm2 start npm start --name "JackBot"
+pm2 start npm -- start --name "JackBot"

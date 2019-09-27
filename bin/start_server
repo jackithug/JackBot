@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd /opt/app/jackbot/
+
+pm2 start npm start --name "JackBot"

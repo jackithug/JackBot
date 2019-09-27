@@ -1,0 +1,28 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /opt/app/jackbot/
+hooks:
+  BeforeInstall:
+    - location: bin/before_install
+      timeout: 300
+      runas: root
+  AfterInstall:
+    - location: bin/after_install
+      timeout: 300
+      runas: root
+    - location: bin/pm2_config
+      timeout: 300
+      runas: ubuntu
+  ApplicationStart:
+    - location: bin/stop_server
+      timeout: 300
+      runas: ubuntu
+    - location: bin/start_server
+      timeout: 300
+      runas: ubuntu
+  ApplicationStop:
+    - location: bin/stop_server
+      timeout: 300
+      runas: ubuntu

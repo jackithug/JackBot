@@ -3,7 +3,7 @@ version: 0.2
 phases:
   install:
     runtime-versions:
-      node: 8
+      nodejs: 8
       ruby: 2.6
     commands:
       - apt-get update

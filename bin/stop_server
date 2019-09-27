@@ -3,8 +3,8 @@
 if pm2 jlist | grep JackBot
 then
   echo "It's there!" 
-  pm2 stop JackBot
-  pm2 delete JackBot
+  pm2 stop all
+  pm2 delete all
 else
   echo "It's not there!"
 fi

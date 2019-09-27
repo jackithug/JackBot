@@ -1,0 +1,9 @@
+{
+    "apps": [
+      {
+        "name": "JackBot",
+        "script": "npm",
+        "args": "start"
+      }
+    ]
+  }

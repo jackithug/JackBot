@@ -14,23 +14,27 @@ const ttsOptions = {
 export const transmit = async (text: string, voiceChannel: Discord.VoiceChannel): Promise<any> => {
     if(text.length >= LENGTH_LIMIT) throw Error('TTS message must be less than 200 characters in length.');
 
-    let connection = await voiceChannel.join();
-    let ttsFile = await generateFile(encodeURIComponent(text));
-    let filePath = path.resolve(ttsFile);
-    let dispatcher = connection.playFile(filePath);
-    dispatcher.setVolume(1);
-
-    try {
-        await new Promise((resolve, reject) => {
-            dispatcher.on('end', resolve);
-            dispatcher.on('error', reject);
-        });
-    } catch (e) {
-        console.error(e);
-    }
+    try  {
+        let connection = await voiceChannel.join();
+        let ttsFile = await generateFile(encodeURIComponent(text));
+        let filePath = path.resolve(ttsFile);
+        let dispatcher = connection.playFile(filePath);
+        dispatcher.setVolume(1);
     
-    voiceChannel.leave();
-    removeFile(ttsFile);
+        try {
+            await new Promise((resolve, reject) => {
+                dispatcher.on('end', resolve);
+                dispatcher.on('error', reject);
+            });
+        } catch (e) {
+            console.error(e);
+        }
+        
+        voiceChannel.leave();
+        removeFile(ttsFile);
+    } catch(e) {
+        throw Error('Something went wrong!')
+    }
 }
 
 const generateFile = async (text: string): Promise<string> => {

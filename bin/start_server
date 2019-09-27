@@ -2,6 +2,5 @@
 
 cd /opt/app/jackbot/
 
-echo $WOLFRAM_APP_ID
-echo $DISCORD_TOKEN
-pm2 start apps.json
+printenv
+pm2 start appws.json

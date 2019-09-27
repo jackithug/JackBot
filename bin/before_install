@@ -1,0 +1,4 @@
+#!/bin/bash
+
+rm -rf /opt/app/jackbot/
+mkdir -p /opt/app/jackbot/

@@ -2,5 +2,4 @@
 
 cd /opt/app/jackbot/
 
-printenv
-pm2 start appws.json
+pm2 start apps.json

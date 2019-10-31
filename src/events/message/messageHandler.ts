@@ -49,6 +49,22 @@ export class MessageHandler {
                 this.tts(message, args)
                 break
         }
+
+        const triggerWords = [
+            'worlds', 'league', 'legends', 'champions', 'skins', ' c9 ', ' cs ', ' cc', ' ad ', ' ap ',
+            'garen', 'nasus', 'shyvana', 'voli', 'annie', 'morgana', 'caitlyn', 'ashe', 'leona', 'janna'
+        ]
+        
+        let hasBeenTriggered = false
+
+        triggerWords.forEach((triggerWord) => {
+            if (hasBeenTriggered) return
+
+            if(message.content.toLowerCase().includes(triggerWord)) {
+                hasBeenTriggered = true
+                message.reply('You better not be talking about League of Legends!')
+            }
+        })
     }
 
     private sendHelpInfo = (message: Discord.Message) => {

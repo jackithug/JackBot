@@ -64,7 +64,7 @@ export class MessageHandler {
             'worlds', 'league', 'legends', 'champions', 'skins', 'c9', 'cc', 'ad', 'ap',
             'garen', 'nasus', 'shyvana', 'voli', 'annie', 'morgana', 'caitlyn', 'ashe', 'leona', 'janna'
         ]
-        const wordsUsed: string[] = _.split(message.content, ' ', Math.max())
+        const wordsUsed: string[] = _.split(message.content.toLowerCase(), ' ', Math.max())
         
         if (!_.isEmpty(_.intersection(triggerWords, wordsUsed)))
             return message.reply('You better not be talking about League of Legends!')

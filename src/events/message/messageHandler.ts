@@ -30,6 +30,8 @@ export class MessageHandler {
             message.reply("Please don't @ me. Type !help to see a list of available commands.")
         }
 
+        this.filterLeagueSpam(message)
+
         if (message.author.bot || message.content.indexOf(this.prefix) !== 0) return
 
         const args = message.content.slice(this.prefix.length).trim().split(/ +/g)
@@ -49,8 +51,6 @@ export class MessageHandler {
                 this.tts(message, args)
                 break
         }
-
-        this.filterLeagueSpam(message)
     }
 
     private filterLeagueSpam = (message: Discord.Message) => {

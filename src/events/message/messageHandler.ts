@@ -50,21 +50,24 @@ export class MessageHandler {
                 break
         }
 
-        const triggerWords = [
-            'worlds', 'league', 'legends', 'champions', 'skins', ' c9 ', ' cs ', ' cc', ' ad ', ' ap ',
+        this.filterLeagueSpam(message)
+    }
+
+    private filterLeagueSpam = (message: Discord.Message) => {
+        if (message.member.user.bot) return
+
+        if (message.content.includes('LoL') || message.content.toLowerCase().includes('league of legends')) {
+            return message.reply('NEVER DISCUSS LEAGUE OF LEGENDS IN THIS SERVER EVER AGAIN!')
+        }
+
+        const triggerWords: string[] = [
+            'worlds', 'league', 'legends', 'champions', 'skins', 'c9', 'cc', 'ad', 'ap',
             'garen', 'nasus', 'shyvana', 'voli', 'annie', 'morgana', 'caitlyn', 'ashe', 'leona', 'janna'
         ]
+        const wordsUsed: string[] = _.split(message.content, ' ', Math.max())
         
-        let hasBeenTriggered = false
-
-        triggerWords.forEach((triggerWord) => {
-            if (hasBeenTriggered) return
-
-            if(message.content.toLowerCase().includes(triggerWord)) {
-                hasBeenTriggered = true
-                message.reply('You better not be talking about League of Legends!')
-            }
-        })
+        if (!_.isEmpty(_.intersection(triggerWords, wordsUsed)))
+            return message.reply('You better not be talking about League of Legends!')
     }
 
     private sendHelpInfo = (message: Discord.Message) => {

@@ -30,7 +30,7 @@ export class MessageHandler {
             message.reply("Please don't @ me. Type !help to see a list of available commands.")
         }
 
-        this.filterLeagueSpam(message)
+        //this.filterLeagueSpam(message)
 
         if (message.author.bot || message.content.indexOf(this.prefix) !== 0) return
 
@@ -75,6 +75,31 @@ export class MessageHandler {
     }
 
     private evalutate = async (message: Discord.Message, args: string[]) => {
+        const badNames = ["timmons", "ross", "matt"]
+        const goodNames = ["jack"]
+        
+        const hasEvaluatedName = false
+        
+        badNames.forEach(badName => {
+            if(hasEvaluatedName) return
+            
+            if(_.includes(message.content.toLowerCase(), `${badName} is`)) {
+               message.reply(`${badName} is a lil hoe!`)
+               return hasEvaluatedName = true
+            }
+        })
+        
+        goodNames.forEach(goodName => {
+            if(hasEvaluatedName) return
+            
+            if(_.includes(message.content.toLowerCase(), `${goodName} is`)) {
+               message.reply(`${goodName} is da best!`)
+               return hasEvaluatedName = true
+            }
+        })
+        
+        if(hasEvaluatedName) return
+                      
         let result = await Wolfram.evaluate(args.join(' '))
         message.reply(result)
     }

@@ -78,7 +78,7 @@ export class MessageHandler {
         const badNames = ["timmons", "ross", "matt"]
         const goodNames = ["jack"]
         
-        const hasEvaluatedName = false
+        let hasEvaluatedName = false
         
         badNames.forEach(badName => {
             if(hasEvaluatedName) return

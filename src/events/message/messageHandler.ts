@@ -83,6 +83,16 @@ export class MessageHandler {
         badNames.forEach(badName => {
             if(hasEvaluatedName) return
             
+            if(_.includes(message.content.toLowerCase(), `about ${badName}`)) {
+               message.reply(`${badName} is a lil hoe!`)
+               return hasEvaluatedName = true
+            }
+            
+            if(_.includes(message.content.toLowerCase(), `is ${badName}`)) {
+               message.reply(`${badName} is a lil hoe!`)
+               return hasEvaluatedName = true
+            }
+            
             if(_.includes(message.content.toLowerCase(), `${badName} is`)) {
                message.reply(`${badName} is a lil hoe!`)
                return hasEvaluatedName = true
@@ -91,6 +101,16 @@ export class MessageHandler {
         
         goodNames.forEach(goodName => {
             if(hasEvaluatedName) return
+            
+            if(_.includes(message.content.toLowerCase(), `about ${goodName}`)) {
+               message.reply(`${goodName} is da best!`)
+               return hasEvaluatedName = true
+            }
+            
+            if(_.includes(message.content.toLowerCase(), `is ${goodName}`)) {
+               message.reply(`${goodName} is da best!`)
+               return hasEvaluatedName = true
+            }
             
             if(_.includes(message.content.toLowerCase(), `${goodName} is`)) {
                message.reply(`${goodName} is da best!`)

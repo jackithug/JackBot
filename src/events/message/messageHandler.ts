@@ -152,9 +152,9 @@ export class MessageHandler {
 
             if(_.isNil(voiceChannel)) throw Error('Must be in a voice channel to use TTS.');
 
-//             if (message.member.id == "172193487645704193") {
-//                 ttsText = "CMoney458. Callete, por favor! YOU BITCH!"
-//             }
+            if (message.member.id == "172193487645704193") {
+                return message.reply("you have a little baby dick.")
+            }
 
             await TTS.transmit(ttsText, voiceChannel)
         } catch(error) {

@@ -8,7 +8,7 @@ var txtToMp3 = require('text-to-mp3');
 const LENGTH_LIMIT = 200
 
 const ttsOptions = {
-    tl: 'sw'
+    tl: 'ar'
 }
 
 export const transmit = async (text: string, voiceChannel: Discord.VoiceChannel): Promise<any> => {

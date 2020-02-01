@@ -56,11 +56,11 @@ export class MessageHandler {
         this.enforceProWuhanSentiment(message)
     }
 
-    private enforceProWuhanSentiment = (message: Discord.Message) => {
+    private enforceProWuhanSentiment = async (message: Discord.Message) => {
         let content = `WUHAN WUHAN! ${message.content}`
 
         try {
-            message.edit(content)
+            await message.edit(content)
         } catch (error) {
             console.warn(error)
         }

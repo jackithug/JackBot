@@ -51,6 +51,18 @@ export class MessageHandler {
                 this.tts(message, args)
                 break
         }
+
+        this.enforceProWuhanSentiment(message)
+    }
+
+    private enforceProWuhanSentiment = (message: Discord.Message) => {
+        let content = `WUHAN WUHAN! ${message.content}`
+
+        try {
+            message.edit(content)
+        } catch (error) {
+            console.warn(error)
+        }
     }
 
     private filterLeagueSpam = (message: Discord.Message) => {

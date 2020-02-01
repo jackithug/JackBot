@@ -57,13 +57,15 @@ export class MessageHandler {
     }
 
     private enforceProWuhanSentiment = async (message: Discord.Message) => {
-        let content = `WUHAN WUHAN! ${message.content}`
+        return
 
-        try {
-            await message.edit(content)
-        } catch (error) {
-            console.warn(error)
-        }
+        // let content = `WUHAN WUHAN! ${message.content}`
+
+        // try {
+        //     await message.edit(content)
+        // } catch (error) {
+        //     console.warn(error)
+        // }
     }
 
     private filterLeagueSpam = (message: Discord.Message) => {

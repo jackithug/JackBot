@@ -32,7 +32,8 @@ export class MessageHandler {
 
         //this.filterLeagueSpam(message)
 
-        if (message.author.bot || message.content.indexOf(this.prefix) !== 0) return
+        if (message.author.bot || message.content.indexOf(this.prefix) !== 0) 
+            return this.enforceProWuhanSentiment(message)
 
         const args = message.content.slice(this.prefix.length).trim().split(/ +/g)
         const command = args.shift().toLowerCase()
@@ -50,6 +51,18 @@ export class MessageHandler {
             case MessageType.TTS:
                 this.tts(message, args)
                 break
+        }
+
+        this.enforceProWuhanSentiment(message)
+    }
+
+    private enforceProWuhanSentiment = async (message: Discord.Message) => {
+        let content = `WUHAN WUHAN! ${message.content}`
+
+        try {
+            await message.edit(content)
+        } catch (error) {
+            console.warn(error)
         }
     }
 

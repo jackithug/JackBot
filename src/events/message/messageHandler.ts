@@ -33,7 +33,7 @@ export class MessageHandler {
         //this.filterLeagueSpam(message)
 
         if (message.author.bot || message.content.indexOf(this.prefix) !== 0) 
-            return this.enforceProWuhanSentiment(message)
+            return this.alertFilter(message)
 
         const args = message.content.slice(this.prefix.length).trim().split(/ +/g)
         const command = args.shift().toLowerCase()
@@ -53,7 +53,7 @@ export class MessageHandler {
                 break
         }
 
-        this.enforceProWuhanSentiment(message)
+        this.alertFilter(message)
     }
 
     private enforceProWuhanSentiment = async (message: Discord.Message) => {
@@ -66,6 +66,13 @@ export class MessageHandler {
         // } catch (error) {
         //     console.warn(error)
         // }
+    }
+
+
+    private alertIds = ['467175964590473219']
+    private alertFilter = (message: Discord.Message) => {
+        if (message.guild.id != '135579694203535360' || !_.includes(this.alertIds, message.author.id)) return
+        message.react(':Siren:')
     }
 
     private filterLeagueSpam = (message: Discord.Message) => {

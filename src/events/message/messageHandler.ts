@@ -68,11 +68,16 @@ export class MessageHandler {
         // }
     }
 
+    private alertGuildIds = ['135579694203535360']
+    private alertUserIds = ['467175964590473219']
 
-    private alertIds = ['467175964590473219']
-    private alertFilter = (message: Discord.Message) => {
-        if (message.guild.id != '135579694203535360' || !_.includes(this.alertIds, message.author.id)) return
-        message.react(':Siren:')
+    private alertFilter = async (message: Discord.Message) => {
+        if (!_.includes(this.alertGuildIds, message.guild.id) || !_.includes(this.alertUserIds, message.author.id)) return
+        try {
+            await message.react('siren:686121210869710858')
+        } catch (err) {
+            console.warn(err)
+        }
     }
 
     private filterLeagueSpam = (message: Discord.Message) => {

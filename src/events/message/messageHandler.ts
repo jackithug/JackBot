@@ -14,7 +14,7 @@ enum MessageType {
 }
 
 const AlertLRU = new LRU(100)
-const AlertCooldown = 1000 * 60 * 15
+const AlertCooldown = 1000 * 60 * 60 * 24
 
 export class MessageHandler {
 

@@ -1,7 +1,9 @@
 import * as Discord from "discord.js"
+import LRU from 'lru-cache'
 import * as Wolfram from '../../modules/wolfram'
 import * as TTS from '../../modules/tts'
 import * as _ from 'lodash'
+import * as config from '../../config'
 import { ClientEvent } from "../clientEvent"
 
 enum MessageType {
@@ -10,6 +12,9 @@ enum MessageType {
     Evaluate = "evaluate",
     TTS = "tts"
 }
+
+const AlertLRU = new LRU(100)
+const AlertCooldown = 1000 * 60 * 15
 
 export class MessageHandler {
 
@@ -29,8 +34,6 @@ export class MessageHandler {
         if (message.mentions.users.filter((user) => { return user.bot }).size > 0) {
             message.reply("Please don't @ me. Type !help to see a list of available commands.")
         }
-
-        //this.filterLeagueSpam(message)
 
         if (message.author.bot || message.content.indexOf(this.prefix) !== 0) 
             return this.alertFilter(message)
@@ -56,32 +59,11 @@ export class MessageHandler {
         this.alertFilter(message)
     }
 
-    private enforceProWuhanSentiment = async (message: Discord.Message) => {
-        return
-
-        // let content = `WUHAN WUHAN! ${message.content}`
-
-        // try {
-        //     await message.edit(content)
-        // } catch (error) {
-        //     console.warn(error)
-        // }
-    }
-
-    private alertEmojis: any = {
-        '135579694203535360' : {
-            '467175964590473219' : 'siren:686121210869710858',
-            '172193487645704193' : '%F0%9F%8C%BD'
-        },
-        '601584043414257674' : {
-            '165665871363047424' : '%F0%9F%8C%BD'
-        }
-    }
-
     private alertFilter = async (message: Discord.Message) => {
-        let emojiReaction = _.get(this.alertEmojis, `${message.guild.id}.${message.author.id}`, null)
+        let comboId = `${message.guild.id}.${message.author.id}`
+        let emojiReaction = _.get(config.defaultReactions, comboId, null)
 
-        if (_.isNil(emojiReaction)) return
+        if (_.isNil(emojiReaction) || !this.validateAlert(comboId)) return
 
         try {
             await message.react(emojiReaction)
@@ -90,21 +72,15 @@ export class MessageHandler {
         }
     }
 
-    private filterLeagueSpam = (message: Discord.Message) => {
-        if (message.member.user.bot) return
+    private validateAlert = (comboId: String): Boolean => {
+        let lastAlertAt: string = <string> AlertLRU.get(comboId)
+        let now: Date = new Date()
 
-        if (message.content.includes('LoL') || message.content.toLowerCase().includes('league of legends')) {
-            return message.reply('NEVER DISCUSS LEAGUE OF LEGENDS IN THIS SERVER EVER AGAIN!')
-        }
+        if (!_.isNil(lastAlertAt) && ((now.getTime() - (new Date(lastAlertAt)).getTime()) < AlertCooldown)) return false
 
-        const triggerWords: string[] = [
-            'worlds', 'league', 'legends', 'champions', 'skins', 'c9', 'cc', 'ad', 'ap',
-            'garen', 'nasus', 'shyvana', 'voli', 'annie', 'morgana', 'caitlyn', 'ashe', 'leona', 'janna'
-        ]
-        const wordsUsed: string[] = _.split(message.content.toLowerCase(), ' ')
-        
-        if (!_.isEmpty(_.intersection(triggerWords, wordsUsed)))
-            return message.reply('You better not be talking about League of Legends!')
+        AlertLRU.set(comboId, now.toString())
+
+        return true
     }
 
     private sendHelpInfo = (message: Discord.Message) => {

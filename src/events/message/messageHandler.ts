@@ -68,13 +68,23 @@ export class MessageHandler {
         // }
     }
 
-    private alertGuildIds = ['135579694203535360']
-    private alertUserIds = ['467175964590473219']
+    private alertEmojis: any = {
+        '135579694203535360' : {
+            '467175964590473219' : 'siren:686121210869710858',
+            '172193487645704193' : '%F0%9F%8C%BD'
+        },
+        '601584043414257674' : {
+            '165665871363047424' : '%F0%9F%8C%BD'
+        }
+    }
 
     private alertFilter = async (message: Discord.Message) => {
-        if (!_.includes(this.alertGuildIds, message.guild.id) || !_.includes(this.alertUserIds, message.author.id)) return
+        let emojiReaction = _.get(this.alertEmojis, `${message.guild.id}.${message.author.id}`, null)
+
+        if (_.isNil(emojiReaction)) return
+
         try {
-            await message.react('siren:686121210869710858')
+            await message.react(emojiReaction)
         } catch (err) {
             console.warn(err)
         }

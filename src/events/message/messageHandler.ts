@@ -64,7 +64,8 @@ export class MessageHandler {
     }
 
     private alertFilter = async (message: Discord.Message) => {
-        let comboId = `${message.guild.id}.${message.author.id}`
+        return // This feature is currently disabled.
+        /*let comboId = `${message.guild.id}.${message.author.id}`
         let emojiReaction = _.get(config.defaultReactions, comboId, null)
 
         if (_.isNil(emojiReaction) || !this.validateAlert(comboId)) return
@@ -73,7 +74,7 @@ export class MessageHandler {
             await message.react(emojiReaction)
         } catch (err) {
             console.warn(err)
-        }
+        }*/
     }
 
     private validateAlert = (comboId: String): Boolean => {

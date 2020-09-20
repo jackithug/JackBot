@@ -21,7 +21,7 @@ export const upload = async (text: string, textChannel: Discord.TextChannel | Di
             files: [
                 {
                     attachment: filePath,
-                    name: `viet-tts-${(new Date()).toISOString()}.mp3`
+                    name: `tts-${(new Date()).toISOString()}.mp3`
                 }
             ] 
         });

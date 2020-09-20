@@ -11,6 +11,26 @@ const ttsOptions = {
     tl: 'vi'
 }
 
+export const upload = async (text: string, textChannel: Discord.TextChannel): Promise<any> => {
+    if(text.length >= LENGTH_LIMIT) throw Error('TTS message must be less than 200 characters in length.');
+
+    try  {
+        let ttsFile = await generateFile(encodeURIComponent(text));
+        let filePath = path.resolve(ttsFile);
+        await textChannel.send({ 
+            files: [
+                {
+                    attachment: filePath,
+                    name: `viet-tts-${(new Date()).getDate()}.mp3`
+                }
+            ] 
+        });
+        removeFile(ttsFile);
+    } catch(e) {
+        throw Error('Something went wrong!')
+    }
+}
+
 export const transmit = async (text: string, voiceChannel: Discord.VoiceChannel): Promise<any> => {
     if(text.length >= LENGTH_LIMIT) throw Error('TTS message must be less than 200 characters in length.');
 

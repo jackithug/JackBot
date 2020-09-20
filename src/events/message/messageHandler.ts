@@ -10,7 +10,8 @@ enum MessageType {
     Help = "help",
     Greeting = "greeting",
     Evaluate = "evaluate",
-    TTS = "tts"
+    TTS = "tts",
+    TTSMP3 = "ttsmp3"
 }
 
 const AlertLRU = new LRU(100)
@@ -53,6 +54,9 @@ export class MessageHandler {
                 break
             case MessageType.TTS:
                 this.tts(message, args)
+                break
+            case MessageType.TTSMP3:
+                this.ttsmp3(message, args)
                 break
         }
 
@@ -166,6 +170,22 @@ export class MessageHandler {
             if(_.isNil(voiceChannel)) throw Error('Must be in a voice channel to use TTS.');
 
             await TTS.transmit(ttsText, voiceChannel)
+        } catch(error) {
+            message.reply(error.message)
+        }
+    }
+
+    private ttsmp3 = async (message: Discord.Message, args: string[]) => {
+        try {
+            if(!message.guild) throw Error('TTS is only supported in servers. Not DMs.');
+            if(_.isEmpty(args)) throw Error('TTS text must not be empty.');
+
+            let textChannel: Discord.TextChannel = _.get(message, 'member.textChannel', null);
+            let ttsText: string = args.join(' ');
+
+            if(_.isNil(textChannel)) throw Error('Must be in a text channel to use TTS.');
+
+            await TTS.upload(ttsText, textChannel)
         } catch(error) {
             message.reply(error.message)
         }

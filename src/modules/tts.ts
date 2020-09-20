@@ -11,7 +11,7 @@ const ttsOptions = {
     tl: 'vi'
 }
 
-export const upload = async (text: string, textChannel: Discord.TextChannel): Promise<any> => {
+export const upload = async (text: string, textChannel: Discord.TextChannel | Discord.DMChannel | Discord.GroupDMChannel): Promise<any> => {
     if(text.length >= LENGTH_LIMIT) throw Error('TTS message must be less than 200 characters in length.');
 
     try  {

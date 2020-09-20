@@ -181,7 +181,7 @@ export class MessageHandler {
             if(!message.guild) throw Error('TTS is only supported in servers. Not DMs.');
             if(_.isEmpty(args)) throw Error('TTS text must not be empty.');
 
-            let textChannel: Discord.TextChannel = _.get(message, 'member.textChannel', null);
+            let textChannel: Discord.TextChannel | Discord.DMChannel | Discord.GroupDMChannel = message.channel;
             let ttsText: string = args.join(' ');
 
             if(_.isNil(textChannel)) throw Error('Must be in a text channel to use TTS.');

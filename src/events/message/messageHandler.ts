@@ -11,7 +11,7 @@ enum MessageType {
     Greeting = "greeting",
     Evaluate = "evaluate",
     TTS = "tts",
-    TTSMP3 = "ttsmp3"
+    TTSMP3 = "tts-mp3"
 }
 
 const AlertLRU = new LRU(100)

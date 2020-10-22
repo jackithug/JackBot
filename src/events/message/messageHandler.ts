@@ -11,6 +11,7 @@ enum MessageType {
     Greeting = "greeting",
     Evaluate = "evaluate",
     TTS = "tts",
+    GUINEA = "guinea",
     TTSMP3 = "tts-mp3"
 }
 
@@ -54,6 +55,9 @@ export class MessageHandler {
                 break
             case MessageType.TTS:
                 this.tts(message, args)
+                break
+            case MessageType.GUINEA:
+                this.guineaShit(message, args)
                 break
             case MessageType.TTSMP3:
                 this.ttsmp3(message, args)
@@ -187,6 +191,20 @@ export class MessageHandler {
             if(_.isNil(textChannel)) throw Error('Must be in a text channel to use TTS.');
 
             await TTS.upload(ttsText, textChannel)
+        } catch(error) {
+            message.reply(error.message)
+        }
+    }
+
+    private guineaShit = async (message: Discord.Message, args: string[]) => {
+        try {
+            if(!message.guild) throw Error('The real fuckign guinea shit is only supported in servers. Not DMs.');
+
+            let voiceChannel: Discord.VoiceChannel = _.get(message, 'member.voiceChannel', null);
+
+            if(_.isNil(voiceChannel)) throw Error('Must be in a voice channel to use the real fucking guinea shit.');
+
+            await TTS.transmitGuineaShit(voiceChannel)
         } catch(error) {
             message.reply(error.message)
         }

@@ -57,29 +57,6 @@ export const transmit = async (text: string, voiceChannel: Discord.VoiceChannel)
     }
 }
 
-export const transmitGuineaShit = async (voiceChannel: Discord.VoiceChannel): Promise<any> => {
-    try  {
-        let connection = await voiceChannel.join();
-        let ttsFile = '../../assets/guinea-shit.mp3';
-        let filePath = path.resolve(__dirname, ttsFile);
-        let dispatcher = connection.playFile(filePath);
-        dispatcher.setVolume(1);
-    
-        try {
-            await new Promise((resolve, reject) => {
-                dispatcher.on('end', resolve);
-                dispatcher.on('error', reject);
-            });
-        } catch (e) {
-            console.error(e);
-        }
-        
-        voiceChannel.leave();
-    } catch(e) {
-        throw Error('Something went wrong!')
-    }
-}
-
 const generateFile = async (text: string): Promise<string> => {
     let filename = `${uuidv4()}.mp3`;
     let file = fs.createWriteStream(filename);

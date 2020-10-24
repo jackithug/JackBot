@@ -5,13 +5,14 @@ import * as TTS from '../../modules/tts'
 import * as _ from 'lodash'
 import * as config from '../../config'
 import { ClientEvent } from "../clientEvent"
+import { MP3 } from "../../modules/mp3"
+import * as MP3Transmitter from "../../modules/mp3"
 
 enum MessageType {
     Help = "help",
     Greeting = "greeting",
     Evaluate = "evaluate",
     TTS = "tts",
-    GUINEA = "guinea",
     TTSMP3 = "tts-mp3"
 }
 
@@ -56,12 +57,12 @@ export class MessageHandler {
             case MessageType.TTS:
                 this.tts(message, args)
                 break
-            case MessageType.GUINEA:
-                this.guineaShit(message, args)
-                break
             case MessageType.TTSMP3:
                 this.ttsmp3(message, args)
                 break
+            case Object.keys(MP3).map(o => MP3[o]).includes(command) ? command : 'nil':
+                this.mp3(message, MP3[command])
+                break;
         }
 
         this.alertFilter(message)
@@ -196,15 +197,15 @@ export class MessageHandler {
         }
     }
 
-    private guineaShit = async (message: Discord.Message, args: string[]) => {
+    private mp3 = async (message: Discord.Message, mp3: MP3) => {
         try {
-            if(!message.guild) throw Error('The real fuckign guinea shit is only supported in servers. Not DMs.');
+            if(!message.guild) throw Error('This command is only supported in servers. Not DMs.');
 
             let voiceChannel: Discord.VoiceChannel = _.get(message, 'member.voiceChannel', null);
 
-            if(_.isNil(voiceChannel)) throw Error('Must be in a voice channel to use the real fucking guinea shit.');
+            if(_.isNil(voiceChannel)) throw Error('Must be in a voice channel to use this command.');
 
-            await TTS.transmitGuineaShit(voiceChannel)
+            await MP3Transmitter.transmit(voiceChannel, mp3)
         } catch(error) {
             message.reply(error.message)
         }

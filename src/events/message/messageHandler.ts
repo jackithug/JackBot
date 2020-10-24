@@ -61,7 +61,7 @@ export class MessageHandler {
                 this.ttsmp3(message, args)
                 break
             case Object.keys(MP3).map(o => MP3[o]).includes(command) ? command : 'nil':
-                this.mp3(message, MP3[command])
+                this.mp3(message, MP3[command.toUpperCase()])
                 break;
         }
 
